@@ -18,7 +18,7 @@ You can use really whatever method you want to get up and running, but I origina
 run -d --net=host -v </path/to/config>:/home/steam/frozen-flame-dedicated/FrozenFlame/Saved --name=frozen-flame-dedicated ghcr.io/ragingdave/frozen-flame-docker:main 
 ```
 
-**NOTE: you still have to create the Game.ini after running the server for the first time to enable things like passwords or other configurations.**
+**NOTE: you still have to create the Game.ini after running the server for the first time to enable things like passwords or other configurations. You can find those instructions here: https://github.com/DreamsideInteractive/FrozenFlameServer#configuration-file**
 
 
 This is currently using the host network simplicity but you should be able to map the ports how you wish without it, but that's untested by me. The ports are exposed in the Dockerfile just not used here yet.
