@@ -4,6 +4,10 @@ Hello and welcome! Hopefully this can help anyone get up and running with Frozen
 
 Issues are welcome but pull requests are even more welcome if you can!
 
+## Specials thanks
+
+My work are based on the docker server of satisfactory from [wolveix](https://github.com/wolveix/satisfactory-server)
+
 ## Background
 
 I spun this up initially because well like anyone else, I wanted to run a dedicated server, but there wasn't yet a Frozen Flame docker image.
@@ -17,6 +21,8 @@ You can use really whatever method you want to get up and running, but I origina
 ```sh
 run -d --net=host -v </path/to/config>:/home/steam/frozen-flame-dedicated/FrozenFlame/Saved --name=frozen-flame-dedicated ghcr.io/ragingdave/frozen-flame-docker:main 
 ```
+
+You can use the docker compose in the folder if you want.
 
 **NOTE: you still have to create the Game.ini after running the server for the first time to enable things like passwords or other configurations. You can find those instructions here: https://github.com/DreamsideInteractive/FrozenFlameServer#configuration-file**
 

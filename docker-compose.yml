@@ -1,0 +1,34 @@
+version: "3.7"
+services:
+  frozen_flame:
+    container_name: frozenFlame
+    build: .
+    image: ragingdave/FrozenFlameServer:latest
+    network_mode: "host"
+    volumes:
+      - "/path/to/config:/config"
+    #ports:
+    #    - 7779:7779
+    #    - 7780:7780/udp
+    #    - 27017:27017/udp
+    expose:
+      - 7779
+      - 7780/udp
+      - 27017/udp
+    environment:
+      - "SERVER_NAME=FrozenFlameServer"
+      - "SERVER_QUERY_PORT=7780"
+      - "SERVER_PORT=7779"
+      - "RCON_PORT=27017"
+      - "RCON_PASSWORD=password"
+      - "MAXPLAYERS=10"
+      - "SERVERPASSWORD=password"
+      - "FREEPVP=true" #Enable PVP for non-friends
+      - "DAYDURATION=3600" #How long a day lasts
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Paris"
+    tmpfs:
+      - "/run:exec,mode=777"
+      - "/tmp:exec,mode=777"
+    restart: "unless-stopped"
