@@ -35,9 +35,12 @@ else
     printf "Skipping update as flag is set\\n"
 fi
 
-mkdir -p "${GAMECONFIGDIR}"
+if [ ! -f "${GAMECONFIGDIR}/Game.ini" ]; then
+    mkdir -p "${GAMECONFIGDIR}"
+    wget -P "${GAMECONFIGDIR}" "${GAMECONFIGLINK}"
+fi
 
-cp /home/steam/*.ini "${GAMECONFIGDIR}"
+# cp /home/steam/*.ini "${GAMECONFIGDIR}"
 if [ ! -L "${GAMESAVESDIR}" ]; then
     ln -sf "/config/saves" "${GAMESAVESDIR}"
 fi
