@@ -60,7 +60,10 @@ set_ini_prop "Game.ini" "\/Script\/FrozenFlame\.FGameSession" "ServerPassword" "
 ## START [/Script/FrozenFlame.GameBalance]
 if [[ "${FREEPVP,,}" == "false" ]]; then
     set_ini_prop "Game.ini" "\/Script\/FrozenFlame\.GameBalance" "bFreePVP" "False;"
+else
+    set_ini_prop "Game.ini" "\/Script\/FrozenFlame\.GameBalance" "bFreePVP" "True;"
 fi
+
 if ! [[ "$DAYDURATION" =~ $NUMCHECK ]] ; then
     printf "Invalid day duration number given: %s\\n" "${DAYDURATION}"
     DAYDURATION=3600

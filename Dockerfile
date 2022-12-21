@@ -13,7 +13,7 @@ RUN mkdir -p /config \
 
 COPY init.sh /
 
-COPY --chown=steam:steam *.ini run.sh /home/steam/
+COPY --chown=steam:steam run.sh /home/steam/
 
 WORKDIR /config
 
