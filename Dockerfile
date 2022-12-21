@@ -1,50 +1,38 @@
-FROM cm2network/steamcmd:root as build_stage
+FROM cm2network/steamcmd:root
 
 LABEL maintainer="davemc08@gmail.com"
 
-ENV STEAMAPPID 1348640 
-ENV STEAMAPP frozen-flame
-ENV STEAMAPPDIR "${HOMEDIR}/${STEAMAPP}-dedicated"
-
-COPY --chown="$USER:$USER" entry.sh "${HOMEDIR}/entry.sh"
-COPY --chown="$USER:$USER" entry.sh "${HOMEDIR}/tinientry.sh"
-
 RUN set -x \
-	# Install, update & upgrade packages
-	&& apt-get update \
-	&& apt-get install -y --no-install-recommends --no-install-suggests \
-		wget=1.21-1+deb11u1 \
-		ca-certificates=20210119 \
-		lib32z1=1:1.2.11.dfsg-2+deb11u2 \
-		tini=0.19.0-1 \
-		libc6-dev=2.31-13+deb11u5 \
-		file=1:5.39-3 \
-	&& mkdir -p "${STEAMAPPDIR}/FrozenFlame/Saved" \
-	# Add entry scripts
-	&& chmod +x "${HOMEDIR}/entry.sh" "${HOMEDIR}/tinientry.sh" \
-	&& chown -R "${USER}:${USER}" "${STEAMAPPDIR}"  \
-	# Clean up
-	&& rm -rf /var/lib/apt/lists/*
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y gosu wget --no-install-recommends\
+    && rm -rf /var/lib/apt/lists/*  \
+    && gosu nobody true
+
+RUN mkdir -p /config \
+ && chown steam:steam /config
+
+COPY init.sh /
+
+COPY --chown=steam:steam run.sh /home/steam/
+
+WORKDIR /config
+
+ENV SERVER_NAME="FrozenFlameServer" \
+    SERVER_PORT=7779 \
+    SERVER_QUERY_PORT=7780 \
+    RCON_PORT=27017 \
+    RCON_PASSWORD="password" \
+    STEAMAPPID=1348640 \
+    MAXPLAYERS=10 \
+    SERVERPASSWORD="password" \
+    FREEPVP=true \
+    DAYDURATION=3600 \
+    PUID=1000 \
+    PGID=1000 \
+    GAMECONFIGDIR="/config/gamefiles/FrozenFlame/Saved/Config/LinuxServer" \
+    GAMECONFIGLINK="https://raw.githubusercontent.com/DreamsideInteractive/FrozenFlameServer/main/Game.ini" \
+    GAMESAVESDIR="/config/gamefiles/FrozenFlame/Saved/SaveGames" \
+    SKIPUPDATE="false"
 
 
-FROM build_stage AS bullseye-base
-
-ENV SERVER_NAME="FrozenFlameDedicated" \
-	RCON_PORT="" \
-	RCON_PASSWORD="password" \
-	STEAMCMD_UPDATE_ARGS=""
-
-# Switch to user
-USER ${USER}
-
-WORKDIR ${HOMEDIR}
-
-EXPOSE 25575 \
-	27015/udp \
-	27015 \
-	7777/udp \
-	7777
-
-VOLUME /home/steam/frozen-flame-dedicated/FrozenFlame/Saved
-
-ENTRYPOINT ["tini", "-g", "--", "/home/steam/tinientry.sh"]
+ENTRYPOINT [ "/init.sh" ]
