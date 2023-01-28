@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/ragingdave/frozen-flame-docker">
-    <img alt="Frozen Flame Dedicated Server" src="https://imgur.com/a/NXCt6UF.jpg" height="250">
+    <img alt="Frozen Flame Dedicated Server" src="assets/banner.jpg" height="250" style="border-radius: 10px;">
   </a>
   <p align="center">Dockerized Frozen Flame Dedicated Server.</p>
 </p>
