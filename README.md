@@ -1,3 +1,6 @@
+## Archived
+At this point I no longer use this image or play the game so this won't be maintained (not that it ever was really well).
+
 <p align="center">
   <a href="https://github.com/ragingdave/frozen-flame-docker">
     <img alt="Frozen Flame Dedicated Server" src="assets/banner.jpg" height="250" style="border-radius: 10px;">
